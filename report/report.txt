@@ -1,0 +1,50 @@
+I used an item based approach to predict ratings for movies.
+For prediction, we preferred K-Nearest-Neighbor algorithm along with the metric
+Cosine-Similarity. So, we converted the data into a CSR matrix using the Liabrary
+SciPy for a faster processing.
+We used the Pandas Library to convert the given data into a matrix form using
+“.as_matrix()”.
+For the arr_actor and arr_direc (i.e. Director) we dropped the ‘id’ column. The
+training data consisted of:
+1. User_Id
+2. Movie_Id
+3. Rating
+We used the Content-Based approach for this assignment as this approach will
+recommend movies that are similar to the ones that the user has liked or watched in
+the past i.e. based on the description of the movie and the profile of the user’s
+preferred choices.
+For Movie Recommendation we preferred K-Nearest Neighbour because it will rely
+on movie feature similarity and will not make any assumptions based on data
+distribution. So, KNN will calculate the distance between the movie whose rating is to
+be predicted and all the other movies in the database and will return all the nearest
+neighbors which is similar to the movie to be predicted based on its distance,
+In order to avoid the curse of dimensionality as we are using the KNN approach, we
+made use of cosine similarity and not euclidean distance. We have learned in the
+earlier assignments while working with KNN, that cosine similarity works the best.
+We have made use of TfIdf-Vectorizer to fit_transform the movie_tags
+We have created a function “conversion_sparse” in order to convert the dense
+matrix into a sparse matrix as the dense matrix increases the computation time and
+memory which is not applicable to be performed in any ordinary machines as well.
+We created a dictionary of all the Movie features and converted them into a sparse
+matrix.
+To do this, there were these major steps in KNN:
+1. Finding the Pairwise Cosine Similarities between the users and the feature sparse
+matrix
+2.For predicting the rating of a movie, we take the average of ratings of K-most
+timilar movies
+3. KNN take the average of:
+a) K most similar users
+b) K most similar movies
+c) K most similar movie tags (additional content)
+d) We will take a mean of all these ratings for the movie rating to be predicted
+i) Incase, there is a new cold start movie, with no rating, we will assign a
+rating of 3.0 by default. This will return all the predicted rating as a
+numpy array.
+The cosine_similarity() function was imported from Sklearn directly. Thus, the
+similarity of the was taken. Here, the input form was the vectorized sparse matrices.
+Cosine similarity, or the cosine kernel, computes similarity as the
+normalized dot product of X and Y:
+K(X, Y) = <X, Y> / (||X||*||Y||)
+The implementation took roughly 20 minutes. We tried many different values for ‘k’
+ranging from 50 to 200 randomly. We got the best result for k=’175’ which was an
+RMAC of 0.89.
